@@ -193,9 +193,16 @@ iina.onMessage("update-jump-to-frame", ({ fps: newFps, frame, time, paused }) =>
 
 });
 
-iina.onMessage("init-jump-to-frame", ({ frame, time }) => {
+iina.onMessage("init-jump-to-frame", ({ fps: newFps, count, frame, time }) => {
+  updateFPS(newFps);
   frameInput.value = frame;
   timeInput.value = formatTime(parseFloat(time));
+
+  if (fps <= 0 || count <= 0) return;
+  if (historyContainer.querySelector('.history-item')) return;
+
+  Array.from({ length: 5 }, (_, i) => Math.round(count * (1 - (i / 4))))
+     .forEach(f => addHistoryItem(f, formatTime(f / fps)));
 });
 
 document.addEventListener('visibilitychange', () => {

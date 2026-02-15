@@ -8,7 +8,7 @@ Frame-accurate seeking plugin for [IINA media player](https://iina.io/).
 
 - **Frame Status**: FPS, current frame number and timecode
 - **Smart Input**: Jump via frame number or flexible timecode formats
-- **Jump History**: Quick-access list of recent positions
+- **Quick Access**: Clickable list of predefined and recent jumps
 
 ## Usage
 

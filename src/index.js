@@ -12,15 +12,21 @@ function updateFPS() {
   if (fps == null || fps < 1) {
     fps = Number(mpv.getString("container-fps"));
   }
+  fps = parseFloat(fps) || 0;
 }
 
 function updateFrameData() {
   sidebar.postMessage("update-jump-to-frame", {
-    fps: parseFloat(fps) || 0,
+    fps: fps,
     frame: mpv.getString("estimated-frame-number"),
     time: mpv.getString("time-pos/full"),
     paused: core.status.paused,
   });
+}
+
+function fileLoaded() {
+  updateFPS();
+  updateFrameData();
 }
 
 function pauseChanged(paused) {
@@ -50,7 +56,7 @@ function startUpdating() {
   }
 
   if (!fpsHook) {
-    fpsHook = event.on("iina.file-loaded", updateFPS);
+    fpsHook = event.on("iina.file-loaded", fileLoaded);
   }
 }
 
@@ -78,7 +84,11 @@ event.on("iina.window-loaded", () => {
   sidebar.onMessage("visible-jump-to-frame", () => {
     sidebarVisible = true;
     startUpdating();
+
+    const countString = mpv.getString("estimated-frame-count");
     sidebar.postMessage("init-jump-to-frame", {
+      fps: fps,
+      count: parseInt(countString, 10) || 0,
       frame: mpv.getString("estimated-frame-number"),
       time: mpv.getString("time-pos/full")
     });
