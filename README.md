@@ -1,8 +1,8 @@
 # Jump to Frame for IINA
 
-Frame-accurate seeking plugin for [IINA media player](https://iina.io/).
+<img src="assets/sidebar.png" align="right" width="36%"/>
 
-![Jump to Frame Preview](assets/preview.png)
+Frame-accurate seeking plugin for [IINA media player](https://iina.io/).
 
 ## Features
 
