@@ -1,0 +1,80 @@
+body {
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    font-size: 13px;
+}
+
+.form-row {
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.form-row input[type="text"] {
+    width: 100%;
+}
+
+.help-text {
+    margin-top: 4px;
+    margin-bottom: 12px;
+}
+
+.info-box {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+}
+
+.info-box.info {
+    background: #f2f2f7;
+    color: #3c3c43;
+    border: 1px solid #d1d1d6;
+}
+
+.info-box.valid {
+    background: rgba(52, 199, 89, 0.1);
+    color: #34c759;
+    border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+.info-box.warning {
+    background: rgba(255, 149, 0, 0.1);
+    color: #ff9500;
+    border: 1px solid rgba(255, 149, 0, 0.3);
+}
+
+.info-box.error {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .info-box.info {
+        background: #2c2c2e;
+        color: #e5e5ea;
+        border-color: #48484a;
+    }
+
+    .info-box.valid {
+        background: rgba(48, 209, 88, 0.15);
+        color: #30d158;
+        border-color: rgba(48, 209, 88, 0.4);
+    }
+
+    .info-box.warning {
+        background: rgba(255, 159, 10, 0.15);
+        color: #ff9f0a;
+        border-color: rgba(255, 159, 10, 0.4);
+    }
+
+    .info-box.error {
+        background: rgba(255, 69, 58, 0.15);
+        color: #ff453a;
+        border-color: rgba(255, 69, 58, 0.4);
+    }
+}

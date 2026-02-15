@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="preferences.css">
+    <style>
+        @media (prefers-color-scheme: dark) {
+            html { color-scheme: dark; color: #eee; }
+        }
+        html, body { margin: 0; }
+        body { padding: 10px;  }
+        ul { padding-left: 20px; margin-bottom: 16px; }
+        li { margin-bottom: 6px; }
+        kbd {
+            background: rgba(128, 128, 128, 0.15);
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-family: "SF Mono", "Menlo", monospace;
+            font-size: 0.9em;
+        }
+        strong { font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="form-row">
+        <label><b>How to use</b></label>
+        <div class="help-text" style="margin-bottom: 12px;">
+            You can toggle the Jump to Frame panel via:
+        </div>
+        <ul>
+            <li>Menu: <strong>Plugin → Jump...</strong></li>
+            <li>Keybind: <kbd>⌘</kbd> + <kbd>G</kbd> (customizable via <strong>Preferences</strong>)</li>
+        </ul>
+
+        <div class="info-box info" style="border-left: 3px solid #e67e22">
+            <label><b>⚠️ IINA API limitations:</b></label>
+            <ul style="margin-bottom: 0px;">
+                <li><strong>Keybind conflict validation</strong> requires IINA restart and media load</li>
+                <li>Some binds may <strong>fail silently</strong> while appearing "Valid" in <strong>Preferences</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-row" style="margin-top: 20px;">
+        <label><b>Input Formats</b></label>
+        <div class="help-text">The input is flexible. You can enter:</div>
+        <ul>
+            <li><strong>Frame number:</strong> e.g., <code>1500</code></li>
+            <li><strong>Timecode:</strong> e.g., <code>1:20</code> or <code>00:01:20.500</code></li>
+        </ul>
+    </div>
+</body>
+</html>

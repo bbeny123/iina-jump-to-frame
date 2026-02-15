@@ -1,0 +1,23 @@
+{
+  "identifier": "io.iina.jump-to-frame",
+  "version": "1.0.0",
+  "name": "Jump to Frame",
+  "description": "Frame-accurate seeking for IINA",
+  "author": {
+    "name": "Ch1re",
+    "url": "https://github.com/bbeny123"
+  },
+  "ghRepo": "bbeny123/iina-jump-to-frame",
+  "ghVersion": 1,
+  "entry": "src/index.js",
+  "helpPage": "src/help.html",
+  "preferencesPage": "src/preferences.html",
+  "preferenceDefaults": {
+    "keybind": "Meta+g"
+  },
+  "sidebarTab": {
+    "name": "Jump to Frame"
+  },
+  "permissions": [],
+  "allowedDomains": ["*"]
+}

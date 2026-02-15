@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="preferences.css">
+</head>
+<body>
+    <div class="form-row">
+        <label for="keybindInput">Keybind</label>
+        <input type="text" id="keybindInput" data-type="string" placeholder="e.g. Meta+g" autocomplete="off" spellcheck="false">
+
+        <div class="small secondary help-text">
+           <div><b>Format:</b> <code>Modifier+Key</code> (e.g. <code>Meta+g</code>, <code>Ctrl+Alt+LEFT</code>, <code>Shift+F5</code>)</div>
+           <div><b>Modifiers:</b> <code>Meta</code> (⌘), <code>Ctrl</code>, <code>Alt</code>, <code>Shift</code></div>
+           <div>Leave empty to disable keybind</div>
+        </div>
+
+        <div class="info-box warning" id="validationInfo">Validating keybind...</div>
+    </div>
+
+    <div class="info-box info">ⓘ Requires IINA restart to take effect</div>
+
+    <script src="preferences.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+    <div class="top-content">
+        <div class="section">
+            <div class="section-title">Current Position</div>
+            <div class="info-grid">
+                <span class="info-label">FPS:</span>
+                <span class="info-value" id="currentFps">25.000</span>
+                <span class="info-label">Frame:</span>
+                <span class="info-value" id="currentFrame">0</span>
+                <span class="info-label">Time:</span>
+                <span class="info-value" id="currentTime">00:00:00.000</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Jump To</div>
+            <div class="error-banner" id="errorMsg">Unable to determine FPS</div>
+            <div class="input-group">
+                <label>Frame</label>
+                <input type="text" id="frameInput" placeholder="0">
+            </div>
+            <div class="input-group">
+                <label>Time</label>
+                <input type="text" id="timeInput" placeholder="00:00:00.000">
+            </div>
+            <button id="jumpBtn">Jump to Position</button>
+        </div>
+    </div>
+
+    <div class="section history-section">
+        <div class="section-title">Recent Jumps</div>
+        <div class="history" id="historyContainer">
+            <div class="empty-state">No jumps yet</div>
+        </div>
+    </div>
+
+    <script src="sidebar.js"></script>
+</body>
+</html>
