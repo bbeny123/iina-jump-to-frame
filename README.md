@@ -6,9 +6,9 @@ Frame-accurate seeking plugin for [IINA media player](https://iina.io/).
 
 ## Features
 
-- **Frame Status**: FPS, current frame number and timecode.
-- **Smart Input**: Jump via frame number or flexible timecode formats.
-- **Jump History**: Quick-access list of recent positions.
+- **Frame Status**: FPS, current frame number and timecode
+- **Smart Input**: Jump via frame number or flexible timecode formats
+- **Jump History**: Quick-access list of recent positions
 
 ## Usage
 
@@ -18,7 +18,7 @@ Access the **Jump to Frame** sidebar in two ways:
 - **Keybind**: <kbd>⌘</kbd> + <kbd>G</kbd>
 
 > [!TIP]
-> Keybind can be modified or disabled via the plugin's **Preferences** tab
+> Keybind can be modified or disabled via the plugin's **Preferences**
 
 ## Installation
 
