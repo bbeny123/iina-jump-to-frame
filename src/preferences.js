@@ -15,28 +15,24 @@ const SPECIAL_KEYS = new Set([
 ]);
 
 let conflictingBind = null;
-let saveTimeout = null;
+let saveKeybindTimeout = null;
 
-function normalizeKeybind(key) {
-  if (!key) return '';
+function sanitizeInput(e, sanitizeFn) {
+  const input = e.target;
+  const { value: inputValue, selectionStart: pos } = input;
 
-  const parts = key.split('+');
-  let actualKey = parts.pop();
-  const upperKey = actualKey.toUpperCase();
-  actualKey = SPECIAL_KEYS.has(upperKey) ? upperKey : actualKey;
+  const clean = sanitizeFn(inputValue);
 
-  if (!parts.length) return actualKey;
+  if (inputValue !== clean) {
+    const cleanPos = sanitizeFn(inputValue.slice(0, pos)).length;
+    input.value = clean;
+    input.setSelectionRange(cleanPos, cleanPos);
+  }
 
-  const partsSet = new Set(parts.map(p => p.toLowerCase()));
-
-  const normalizedModifiers = Object.keys(MODIFIERS)
-    .filter(key => partsSet.has(key))
-    .map(key => MODIFIERS[key]);
-
-  return [...normalizedModifiers, actualKey].join('+');
+  return clean;
 }
 
-function sanitizeInput(input) {
+function sanitizeKeybind(input) {
   input = input.replace(/^\++/, '').replace(/\+{2,}/g, '+').replace(/\s+/g, '');
   if (!input) return "";
 
@@ -57,7 +53,26 @@ function sanitizeInput(input) {
   return [...resultParts, danglingPart].join('+');
 }
 
-function validateKeybind(key) {
+function normalizeKeybind(key) {
+  if (!key) return '';
+
+  const parts = key.split('+');
+  let actualKey = parts.pop();
+  const upperKey = actualKey.toUpperCase();
+  actualKey = SPECIAL_KEYS.has(upperKey) ? upperKey : actualKey;
+
+  if (!parts.length) return actualKey;
+
+  const partsSet = new Set(parts.map(p => p.toLowerCase()));
+
+  const normalizedModifiers = Object.keys(MODIFIERS)
+    .filter(key => partsSet.has(key))
+    .map(key => MODIFIERS[key]);
+
+  return [...normalizedModifiers, actualKey].join('+');
+}
+
+function invalidKeybindMessage(key) {
   if (!key) return "";
   if (key.endsWith('+')) return "Invalid format: Trailing +";
 
@@ -76,48 +91,57 @@ function validateKeybind(key) {
   return "";
 }
 
-function changeValidationInfo(className, message) {
+function updateValidationInfo(className, message) {
   validationInfo.textContent = message;
   validationInfo.className = `info-box ${className}`;
 }
 
-function setInput(input, userInput = true) {
-  input = sanitizeInput(input);
-  keybindInput.value = input;
-
-  const msg = validateKeybind(input);
+function validateKeybind(input) {
+  const msg = invalidKeybindMessage(input);
   if (!input) {
-    changeValidationInfo('info', "ⓘ Keybind disabled");
+    updateValidationInfo('info', "ⓘ Keybind disabled");
   } else if (!msg) {
-    changeValidationInfo('valid', '✓ Keybind is valid');
+    updateValidationInfo('valid', '✓ Keybind is valid');
   } else if (msg.startsWith("Possibly")) {
-    changeValidationInfo('warning', "⚠ " + msg);
+    updateValidationInfo('warning', "⚠ " + msg);
   } else {
-    changeValidationInfo('error', "⚠ " + msg);
-    return;
+    updateValidationInfo('error', "⚠ " + msg);
+    return false;
   }
 
-  const normalized = userInput ? normalizeKeybind(input) : input;
-
-  if (normalized && normalized === conflictingBind) {
-    changeValidationInfo('error', "⚠ Keybind is already in use");
-  }
-
-  if (!userInput) return;
-
-  clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => {
-    iina.preferences.set("keybind", normalized);
-    iina.preferences.set("bindConflict", false);
-    saveTimeout = null;
-  }, 200);
+  return true;
 }
 
-keybindInput.addEventListener('input', e => setInput(e.target.value));
+function validateConflict(normalized) {
+  if (!normalized || normalized !== conflictingBind) return false;
+
+  updateValidationInfo('error', "⚠ Keybind is already in use");
+  return true;
+}
+
+keybindInput.addEventListener('input', e => {
+  clearTimeout(saveKeybindTimeout);
+
+  const input = sanitizeInput(e, sanitizeKeybind);
+  if (!validateKeybind(input)) return;
+
+  const normalized = normalizeKeybind(input);
+  const conflicting = validateConflict(normalized);
+
+  saveKeybindTimeout = setTimeout(() => {
+    iina.preferences.set("keybind", normalized);
+    iina.preferences.set("bindConflict", conflicting);
+    saveKeybindTimeout = null;
+  }, 200);
+});
 
 iina.preferences.get("keybind", keybind => {
   iina.preferences.get("bindConflict", hasConflict => {
     if (hasConflict) conflictingBind = keybind;
-    setInput(keybind || "", false);
+    const clean = sanitizeKeybind(keybind || "")
+    keybindInput.value = clean;
+    if (validateKeybind(clean)) {
+      validateConflict(clean);
+    }
   });
 });
